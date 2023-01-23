@@ -32,6 +32,11 @@ label {
   font-family: 'Quattrocento Sans', sans-serif;
 }
 
+button{
+  font-family: 'Quattrocento Sans', sans-serif;
+background-color: orange;
+}
+
 /* Style the submit button */
 input[type=submit] {
   background-color: #04AA6D;
@@ -80,10 +85,52 @@ input[type=submit] {
     font-family: 'Quattrocento Sans', sans-serif;
   }
 }
+.collapsible {
+  background-color: rgb(235, 155, 5);
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  font-family: 'Quattrocento Sans', sans-serif;
+}
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
+  font-family: 'Quattrocento Sans', sans-serif;
+}
     </style>
 </head>
 <body>
+  
+  <button class="collapsible">Basic Guidlines</button>
+  <div class="content">
+    <p>1) Atleast have 150 words for your submissions.</p>
+    <p>2) Make sure you do not use offensive language, hate speech, cultural appropriation or discrimination.</p>
+    <p>3) Make sure you do not spread misleading information.</p>
+  </div>
+  <script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
     
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight){
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
+    }
+    </script>
     <label>Name</label> <input id="Namebox" type="text"><hr>
     <label>School Email Id</label> <input id="mailbox" type="text"><hr>
     <label>Grade</label> <input id="titlbox" type="text"><hr>
@@ -99,7 +146,7 @@ input[type=submit] {
         <option value="scitech">Science and Technology</option>
         <option value="sportsandgames">Sports and Games</option>
         <option value="studentshowcase">Student Showcase Wall</option>
-        <option value="incidents">Incidents</option>
+        <option value="reflections">Reflections</option>
     </select>
     <hr>
     <button id="submit">Submit</button>
@@ -107,14 +154,15 @@ input[type=submit] {
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.3.0/firebase-app.js";
         const firebaseConfig = {
-          apiKey: "AIzaSyAAH82NFbO3t7sSZb5bEOvaAj1UNmjUELc",
-  authDomain: "tns-newspaper-database.firebaseapp.com",
-  databaseURL: "https://tns-newspaper-database-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "tns-newspaper-database",
-  storageBucket: "tns-newspaper-database.appspot.com",
-  messagingSenderId: "468403739377",
-  appId: "1:468403739377:web:5a3c5ed60dcdf5c81ca750"
-        };
+  apiKey: "AIzaSyA8Uc8kK_1CPplc0sPcPlxlRZIedfy-ZwQ",
+  authDomain: "polaris-tns-newspaper.firebaseapp.com",
+  databaseURL: "https://polaris-tns-newspaper-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "polaris-tns-newspaper",
+  storageBucket: "polaris-tns-newspaper.appspot.com",
+  messagingSenderId: "185498593840",
+  appId: "1:185498593840:web:867d58bf4202362ec25bf5",
+  measurementId: "G-SVZKJR694S"
+};
         const app = initializeApp(firebaseConfig);
 
         import{getDatabase, ref, set, child} from "https://www.gstatic.com/firebasejs/9.3.0/firebase-database.js"
@@ -141,7 +189,7 @@ input[type=submit] {
                 AdditionalImg: CoverImg.value,
                 // Date: dateTime.value
             })
-
+// add the google form 
             .then(()=>{
                 alert("Your submission has been successfully recorded")
             })
