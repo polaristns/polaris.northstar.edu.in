@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quattrocento+Sans:wght@700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+
+    <title>Upload</title>
+    <style>
+        label{
+            display: inline-block;
+            font-family: 'Quattrocento Sans', sans-serif;
+        }
+        input[type=text], select, textarea{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+  font-family: 'Quattrocento Sans', sans-serif;
+}
+
+/* Style the label to display next to the inputs */
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+  font-family: 'Quattrocento Sans', sans-serif;
+}
+
+/* Style the submit button */
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+  font-family: 'Quattrocento Sans', sans-serif;
+}
+
+/* Style the container */
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+/* Floating column for labels: 25% width */
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+/* Floating column for inputs: 75% width */
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+    font-family: 'Quattrocento Sans', sans-serif;
+  }
+}
+    </style>
+</head>
+<body>
+    
+    <label>Name</label> <input id="Namebox" type="text"><hr>
+    <label>School Email Id</label> <input id="mailbox" type="text"><hr>
+    <label>Grade</label> <input id="titlbox" type="text"><hr>
+    <label>Story</label> <input id="hlbox" type="text"><hr>
+    <label>Additional Images (Drive Link)</label> <input id="cpbox" type="text"><hr>
+     <!-- <label>Upload Time (Will Be Displayed Under Your Feed Post)</label> <input id="timebox" type="datetime-local"><hr>  -->
+    <label>Choose Section</label>
+    <select id="PgSel">
+        <option value="school events">School Event(s)</option>
+        <option value="Business">Business</option>
+        <option value="CurrentAffairs">Current Affairs</option>
+        <option value="edu">Education</option>
+        <option value="scitech">Science and Technology</option>
+        <option value="sportsandgames">Sports and Games</option>
+        <option value="studentshowcase">Student Showcase Wall</option>
+        <option value="incidents">Incidents</option>
+    </select>
+    <hr>
+    <button id="submit">Submit</button>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.3.0/firebase-app.js";
+        const firebaseConfig = {
+          apiKey: "AIzaSyAAH82NFbO3t7sSZb5bEOvaAj1UNmjUELc",
+  authDomain: "tns-newspaper-database.firebaseapp.com",
+  databaseURL: "https://tns-newspaper-database-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "tns-newspaper-database",
+  storageBucket: "tns-newspaper-database.appspot.com",
+  messagingSenderId: "468403739377",
+  appId: "1:468403739377:web:5a3c5ed60dcdf5c81ca750"
+        };
+        const app = initializeApp(firebaseConfig);
+
+        import{getDatabase, ref, set, child} from "https://www.gstatic.com/firebasejs/9.3.0/firebase-database.js"
+
+        const db = getDatabase();
+
+        var nameBox = document.getElementById("Namebox");
+        var EmailBox = document.getElementById("mailbox");
+        var TitleBox = document.getElementById("titlbox");
+        var linkBox = document.getElementById("hlbox");
+        var selboxBox = document.getElementById("PgSel");
+        var CoverImg = document.getElementById("cpbox");
+        // var dateTime = document.getElementById("timebox")
+
+        var submitbtn = document.getElementById("submit")
+
+        function returnData(){
+            set(ref(db, "Stories/" + nameBox.value),{
+                NameOfStudent: nameBox.value,
+                Email: EmailBox.value,
+                Grade: TitleBox.value,
+                Story: linkBox.value,
+                Genre: selboxBox.value,
+                AdditionalImg: CoverImg.value,
+                // Date: dateTime.value
+            })
+
+            .then(()=>{
+                alert("Your submission has been successfully recorded")
+            })
+            .catch((error)=>{
+                alert("unsuccessful, error encountered by server : "+error)
+            })
+        }
+
+        submitbtn.addEventListener('click', returnData)
+      </script>
+
+</body>
+</html>
