@@ -1,16 +1,15 @@
-<html>
-    <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Quattrocento+Sans&family=Work+Sans&display=swap" rel="stylesheet">
-<title>Log In</title>
-<link rel="icon" type="image/x-icon" href="favicon.png">
 
-<style>
-    h2{
+<html>
+  <head>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quattrocento+Sans:wght@700&display=swap" rel="stylesheet">
+    <style>
+      h2{
         text-align: center;
         font-family: 'Quattrocento Sans', sans-serif;
-        color: white;
+        color: black;
         margin-top: 20%;
     }
     form{
@@ -22,34 +21,83 @@
         background-image: url("bg4.jpg");
             background-repeat: no-repeat;
             background-size: cover;
-    }
-    label{
-        font-family: 'Quattrocento Sans', sans-serif;
-    }
-    input{
-        font-family: 'Quattrocento Sans', sans-serif;
+            background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('bg4.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size:  cover;
+  -o-background-size: cover;
+  /* background-size: 1500px; */
+  /* background-repeat: no-repeat; */
+        }
+        .main{
+            background-color: orange;
+            font-family: 'Quattrocento Sans', sans-serif;
+                }
+        input[type=button]{
+            font-family: 'Quattrocento Sans', sans-serif;
+
+            width: 30px;  
+    height: 30px;  
+    border: none;  
+    border-radius: 17px;  
+    padding-left: 7px;  
+    color: blue;  
     }
     
-</style>
-    </head>
-    <body>
-<script src="verify.js"></script>
+    .label{
+        font-family: 'Quattrocento Sans', sans-serif;
+        text-align: center;
+        color: white;
+    }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-auth.js"></script>
 
-
-<!-- <div class="container">
-<div class="main"> -->
-<h2>Login To POLARIS STUDIO</h2>
-<form id="form_id" method="post" name="myform">
-<label>User Name :</label>
-<input type="text" name="username" id="username"/>
-<label>Password :</label>
-
-<input type="password" name="password" id="password"/>
-
-<input type="button" value="Login" id="submit" onclick="validate()"/>
-
-</form>
-<!-- </div>
-</div> -->
-<script>
-    
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyA8Uc8kK_1CPplc0sPcPlxlRZIedfy-ZwQ",
+  authDomain: "polaris-tns-newspaper.firebaseapp.com",
+  databaseURL: "https://polaris-tns-newspaper-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "polaris-tns-newspaper",
+  storageBucket: "polaris-tns-newspaper.appspot.com",
+  messagingSenderId: "185498593840",
+  appId: "1:185498593840:web:867d58bf4202362ec25bf5",
+  measurementId: "G-SVZKJR694S"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+  </head>
+  <body>
+    <h2>Login To POLARIS Studio</h2>
+    <div class="label">
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <button id="submit" onclick="validate()">Submit</button>
+    </div>
+    <script>
+      let attempt = 3;
+      function validate() {
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        
+        firebase.auth().signInWithEmailAndPassword(username, password)
+          .then(function () {
+            alert("Hello " + username + " Thanks for logging in, click on ok to continue");
+            window.location = "addition-grade8-gibbonware-maintrue.html";
+          })
+          .catch(function (error) {
+            attempt--;
+            alert("Please Re-Check Your Credentials");
+            
+            if (attempt == 0) {
+              document.getElementById("username").disabled = true;
+              document.getElementById("password").disabled = true;
+              document.getElementById("submit").disabled = true;
+              alert("Your login rights have been suspended");
+            }
+          });
+      }
+    </script>
+  </body>
+</html>
