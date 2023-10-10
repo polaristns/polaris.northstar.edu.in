@@ -131,10 +131,12 @@ input[type=submit] {
       });
     }
     </script>
+    
     <label>Name</label> <input id="Namebox" type="text"><hr>
     <label>School Email Id</label> <input id="mailbox" type="text"><hr>
     <label>Grade</label> <input id="titlbox" type="text"><hr>
-    <label>Story (Google Docs Link Preferred) </label> <input id="hlbox" type="text"><hr>
+    <label>Headline / Title</label> <input id="hdbox" type="text"><hr>
+    <label>Story</label> <input id="hlbox" type="text"><hr>
     <label>Additional Images (Drive Link)</label> <input id="cpbox" type="text"><hr>
      <!-- <label>Upload Time (Will Be Displayed Under Your Feed Post)</label> <input id="timebox" type="datetime-local"><hr>  -->
     <label>Choose Section</label>
@@ -146,15 +148,14 @@ input[type=submit] {
         <option value="scitech">Science and Technology</option>
         <option value="sportsandgames">Sports and Games</option>
         <option value="studentshowcase">Student Showcase Wall</option>
-        <option value="reflections">Reflections</option>
+        <option value="incidents">Incidents</option>
     </select>
     <hr>
     <button id="submit">Submit</button>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.3.0/firebase-app.js";
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+       const firebaseConfig = {
   apiKey: "AIzaSyA8Uc8kK_1CPplc0sPcPlxlRZIedfy-ZwQ",
   authDomain: "polaris-tns-newspaper.firebaseapp.com",
   databaseURL: "https://polaris-tns-newspaper-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -173,6 +174,7 @@ const firebaseConfig = {
         var nameBox = document.getElementById("Namebox");
         var EmailBox = document.getElementById("mailbox");
         var TitleBox = document.getElementById("titlbox");
+        var HeadLine = document.getElementById("hdbox")
         var linkBox = document.getElementById("hlbox");
         var selboxBox = document.getElementById("PgSel");
         var CoverImg = document.getElementById("cpbox");
@@ -181,18 +183,19 @@ const firebaseConfig = {
         var submitbtn = document.getElementById("submit")
 
         function returnData(){
-            set(ref(db, "Stories/" + nameBox.value),{
+            set(ref(db, "Stories/" + HeadLine.value),{
                 NameOfStudent: nameBox.value,
                 Email: EmailBox.value,
                 Grade: TitleBox.value,
+                HeadlineorTitle: HeadLine.value,
                 Story: linkBox.value,
                 Genre: selboxBox.value,
                 AdditionalImg: CoverImg.value,
                 // Date: dateTime.value
             })
-// add the google form 
+
             .then(()=>{
-                alert("Your submission has been successfully recorded")
+                console.log("Sumitted")
             })
             .catch((error)=>{
                 alert("unsuccessful, error encountered by server : "+error)
